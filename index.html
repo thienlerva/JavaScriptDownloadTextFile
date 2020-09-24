@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Export a text file to download folder</title>
+</head>
+<body>
+
+	<textarea id="text-value" rows="4">This is the content of my file</textarea><br/>
+
+	<input type="button" id="dwn-btn" value="Export">
+
+	<script>
+		function download(obj) {
+
+			let blog = new Blob([obj.data], { type: 'text/plain;charset=utf-8;' });
+			let element = document.createElement("a");
+			if (element.download !== undefined) {
+				let url = URL.createObjectURL(blog);
+				element.setAttribute('href', url);
+			element.setAttribute('download', obj.filename);
+
+			element.style.display = 'none',
+			document.body.appendChild(element);
+			element.click();
+			document.body.removeChild(element);
+			}
+
+			// let element = document.createElement("a");
+			// element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+			// element.setAttribute('download', filename);
+
+			// element.style.display = 'none',
+			// document.body.appendChild(element);
+			// element.click();
+			// document.body.removeChild(element);
+		}
+
+		document.getElementById("dwn-btn").addEventListener("click", function(){
+			let text = document.getElementById("text-value").value;
+			let filename = "javascriptdownload.txt";
+			let obj = {data: text, filename: filename};
+			download(obj);
+		}, false);
+	</script>
+</body>
+</html>
